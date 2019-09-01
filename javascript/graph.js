@@ -1,9 +1,10 @@
 function Graph() {
-  this.graphContainer = document.querySelector('.graph-container');
+  const graphContainer = document.querySelector('.graph-container');
+  this.graphContainer = graphContainer;
 
   this.draw = function(arr, redIndexes) {
-    while (this.graphContainer.firstChild) {
-      this.graphContainer.removeChild(this.graphContainer.firstChild);
+    while (graphContainer.firstChild) {
+      graphContainer.removeChild(graphContainer.firstChild);
     }
 
     var arrayLength = arr.length;
@@ -12,22 +13,36 @@ function Graph() {
     for (var i=0; i<arrayLength; i++) {
       var val = arr[i];
       var bar = document.createElement('div');
-      bar.style.width = this.graphContainer.offsetWidth / arrayLength + 'px';
-      bar.style.backgroundColor = '#28a745';
+      bar.style.width = graphContainer.offsetWidth / arrayLength + 'px';
       bar.style.height = val / maxVal * 100 + '%';
-      bar.style.borderRight = '1px solid white'
-      this.graphContainer.appendChild(bar);
+      bar.style.border = '2px solid white'
+      graphContainer.appendChild(bar);
+    }
 
-      if (isInCorrectPlace(i, arr)) {
-        bar.style.backgroundColor = 'red';
+    this.recolour(arr);
+  }
+
+  this.recolour = function(array) {
+    var finished = false;
+    for (var i=array.length - 1; i>=0; i--) {
+      var currentNode = graphContainer.childNodes[i];
+      if (!finished && isInCorrectPlace(i, array)) {
+        currentNode.style.backgroundColor = 'purple';
+      } else {
+        finished = true;
+        currentNode.style.backgroundColor = '#28a745';
       }
     }
   }
 
   function isInCorrectPlace(i, arr) {
     var val = arr[i];
+    var arrayLength = arr.length;
+    var beforeArray = arr.slice(0, i);
+    var afterArray = arr.slice(i+1, arrayLength);
 
-    if (val >= findMaxVal(arr.slice(0, i)) && val <= findMaxVal(arr.slice(i + 1, arr.length))) {
+    if ((val >= findMaxVal(beforeArray) || !beforeArray.length) &&
+    (val <= findMinVal(afterArray) || !afterArray.length)) {
       return true;
     }
   }
@@ -41,5 +56,16 @@ function Graph() {
     }
 
     return currentMaxVal;
+  }
+
+  function findMinVal(arr) {
+    var currentMinVal = arr[0];
+    for (var i=0; i<arr.length; i++) {
+      if (arr[i] < currentMinVal) {
+        currentMinVal = arr[i];
+      }
+    }
+
+    return currentMinVal;
   }
 }

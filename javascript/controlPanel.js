@@ -41,6 +41,8 @@ function ControlPanel(array, graph) {
     var sorted = this.array.values.sort((a, b) => a - b);
     intervalId = setInterval(() => {
       var stepPerformed = this.bubbleSort.performStep();
+      graph.recolour(stepPerformed);
+
       // TODO Compare arrays in a nicer way
       if (JSON.stringify(sorted) == JSON.stringify(stepPerformed)) {
         clearInterval(intervalId);
