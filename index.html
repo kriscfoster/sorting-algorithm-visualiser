@@ -10,6 +10,9 @@
       <div class="left-col text-left text-white">
         <h1>Sorting Algorithm Visualiser</h1>
         <div class="mb-3">
+          <button type="button" class="success" id="newArrayButton">Generate New Array</button>
+        </div>
+        <div class="mb-3">
           <label>Array Size (<span id="arraySizeOutput"></span>)</label>
           <div class="slidecontainer">
             <input
@@ -39,7 +42,21 @@
             </div>
           </div>
         </div>
-        <button type="button" id="sortButton">Sort</button>
+        <div class="mb-3">
+          <label>Animation Speed</label>
+          <div class="slidecontainer">
+            <input
+              type="range"
+              min="0"
+              max="500"
+              value="250"
+              class="slider"
+              id="animationSpeedSlider"
+              />
+          </div>
+        </div>
+        <button type="button" class="success" id="sortButton">Sort</button>
+        <button type="button" class="error d-none" id="stopButton">Stop</button>
       </div>
       <div class="right-col">
         <div class="graph-container"></div>

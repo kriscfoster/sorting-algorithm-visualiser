@@ -72,10 +72,26 @@ button {
   font-size: 18px;
   color: white;
   padding: 10px 18px 10px 18px;
-  background: #28a745;
   border: 1.5px solid black;
   outline: none;
   cursor: pointer;
+}
+
+.success {
+  background: #28a745;
+}
+
+.error {
+  background: red;
+}
+
+.d-none {
+  display: none;
+}
+
+button:disabled {
+  background: #747474;
+   cursor: not-allowed;
 }
 
 body {

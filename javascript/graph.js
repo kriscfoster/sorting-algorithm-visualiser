@@ -13,16 +13,22 @@ function Graph() {
       var val = arr[i];
       var bar = document.createElement('div');
       bar.style.width = this.graphContainer.offsetWidth / arrayLength + 'px';
-
-      if (redIndexes && redIndexes.includes(i)) {
-        bar.style.backgroundColor = 'red';
-      } else {
-        bar.style.backgroundColor = '#28a745';
-      }
-
+      bar.style.backgroundColor = '#28a745';
       bar.style.height = val / maxVal * 100 + '%';
       bar.style.borderRight = '1px solid white'
       this.graphContainer.appendChild(bar);
+
+      if (isInCorrectPlace(i, arr)) {
+        bar.style.backgroundColor = 'red';
+      }
+    }
+  }
+
+  function isInCorrectPlace(i, arr) {
+    var val = arr[i];
+
+    if (val >= findMaxVal(arr.slice(0, i)) && val <= findMaxVal(arr.slice(i + 1, arr.length))) {
+      return true;
     }
   }
 
