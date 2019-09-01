@@ -2,6 +2,7 @@ function ControlPanel(array, graph) {
   this.array = array;
   this.graph = graph;
   this.bubbleSort = new BubbleSort(array.values, graph);
+  this.quickSort = new QuickSort(array.values, graph)
   this.animationSpeed = 250;
 
   var arraySizeSlider = document.getElementById("arraySizeSlider");
@@ -18,6 +19,7 @@ function ControlPanel(array, graph) {
     this.array = new Array(arrayLength);
     graph.draw(this.array.values);
     this.bubbleSort = new BubbleSort(this.array.values, graph);
+    this.quickSort = new QuickSort(this.array.values, graph);
     sortButton.disabled = false;
   }).bind(this);
 
@@ -36,13 +38,19 @@ function ControlPanel(array, graph) {
   var intervalId;
 
   sortButton.onclick = (function(evt) {
+    var algorithm = document.querySelector("input[name=algorithm]:checked").value;
     sortButton.style.display = 'none';
     stopButton.style.display = 'block';
     var sorted = this.array.values.sort((a, b) => a - b);
     intervalId = setInterval(() => {
-      var stepPerformed = this.bubbleSort.performStep();
-      graph.recolour(stepPerformed);
+      var stepPerformed;
+      if (algorithm === 'bubble-sort') {
+        stepPerformed = this.bubbleSort.performStep();
+      } else if (algorithm === 'quick-sort') {
+        stepPerformed = this.quickSort.performStep();
+      }
 
+      graph.recolour(stepPerformed);
       // TODO Compare arrays in a nicer way
       if (JSON.stringify(sorted) == JSON.stringify(stepPerformed)) {
         clearInterval(intervalId);
